@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest News</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #newsContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 20px;
+        }
+        .news-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Latest News</h1>
+    <div id="newsContainer"></div>
+
+    <script>
+        async function fetchNews(country = 'United States') {
+            try {
+                const response = await fetch(`http://localhost:3000/news?country=${encodeURIComponent(country)}`);
+                const data = await response.json();
+                displayNews(data.articles);
+            } catch (error) {
+                console.error('Error fetching news:', error);
+            }
+        }
+    
+        function displayNews(articles) {
+            const newsContainer = document.getElementById('newsContainer');
+            newsContainer.innerHTML = ''; // Clear previous news
+    
+            if (articles && articles.length > 0) {
+                articles.forEach(article => {
+                    const newsItem = document.createElement('div');
+                    newsItem.className = 'news-item';
+                    newsItem.innerHTML = `
+                        
+                        <h2>${article.title}</h2>
+                        <p>${article.description}</p>
+                        <a href="${article.url}" target="_blank">Read more</a>
+                    `;
+                    newsContainer.appendChild(newsItem);
+                });
+            } else {
+                newsContainer.innerHTML = '<p>No news articles found.</p>'; // Handle no articles case
+            }
+        }
+    
+        // Get the country name from the URL and fetch news
+        const urlParams = new URLSearchParams(window.location.search);
+        const country = urlParams.get('country'); // Get country from URL
+        fetchNews(country || 'United States'); // Fetch news for the country or default to US
+    </script>
+    
+</body>
+</html>
