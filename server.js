@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Your GNews API key
-const apiKey = 'ced4547d5a440be8dbe949b56da0f7b8';
+const apiKey = 'ccccccccccccccccc';
 
 // Route to fetch news from GNews API
 app.get('/news', async (req, res) => {
