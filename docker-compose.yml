@@ -1,11 +1,12 @@
 version: '3'
 
 services:
-  app:
+  salehproject-:
     image: ghcr.io/salehabujazar/salehproject-:latest 
-    build:
-      context: .
-      dockerfile: Dockerfile
+    deploy:
+    labels: [com.centurylinklabs.watchtower.enable=true]
+    container_name: project-deep-2023-24
+    restart: always
     ports:
       - "3000:3000"
     environment:
