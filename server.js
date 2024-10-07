@@ -2,18 +2,18 @@ const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
 const path = require('path');
+require('dotenv').config();
 
 const app = express();
 const port = 3000; // You can change this to another port if needed
+
+const apiKey = process.env.GNEWS_API_KEY || 'default_key_if_not_found';
 
 // Enable CORS to allow frontend requests
 app.use(cors());
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Your GNews API key
-const apiKey = 'ccccccccccccccccc';
 
 // Route to fetch news from GNews API
 app.get('/news', async (req, res) => {
@@ -42,3 +42,5 @@ app.get('/news.html', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
+
+
